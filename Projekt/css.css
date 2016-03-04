@@ -1,0 +1,33 @@
+body {
+	background-color: #F5F5DC;
+	font-family: monospace;
+	width: 70%
+}
+
+img {
+	width: 200px;
+}
+
+#pildiallkiri {
+	width: 200px;
+}
+
+#oluline {
+	font-weight: bold;
+}
+
+p {
+	text-align: justify;
+}
+
+
+h1 {
+	border-bottom: solid;
+}
+
+a {
+	color: black;
+	font-size: 80%;
+	font-weight: bold;
+
+}
