@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Kodune Ülesanne</title>
+    <style type="text/css">
+        .active { background: skyblue; padding: 10px;}
+    </style>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript">
+	$(document).ready(function() {
+    var aktiivne = $("li").first();
+    $(aktiivne).addClass("active");
+
+    function edasi(){
+    if( $("li.active").is(":last-child")) {
+     aktiivne = $("li").first();
+     $("li.active").removeClass("active");
+     $(aktiivne).addClass("active");
+     }
+     else {
+
+     var aktiivne = $("li.active").next();
+     $("li.active").removeClass("active");
+     $(aktiivne).addClass("active");
+     }
+     }
+
+     function tagasi(){
+     if( $("li.active").is(":first-child")){
+     aktiivne = $("li").last();
+     $("li.active").removeClass("active");
+     $(aktiivne).addClass("active");
+     }
+
+     else {
+     var aktiivne = $("li.active").prev();
+     $("li.active").removeClass("active");
+     $(aktiivne).addClass("active");
+     }
+     }
+
+     $("#next").on("click", function() {
+     edasi(); });
+
+      $("#prev").on("click", function() {
+     tagasi();
+
+     });
+     });
+
+
+
+
+
+    </script>
+</head>
+<body>
+<button id="next">edasi</button>
+<button id="prev">tagasi</button>
+
+<ul>
+    <li>esimene</li>
+    <li>teine</li>
+    <li>kolmas</li>
+    <li>neljas</li>
+</ul>
+
+</body>
+</html>
