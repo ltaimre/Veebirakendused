@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8" />
+	<title>Kolmas</title>
+	
+	<style>
+	body {
+		background-color: linen;
+		
+		}
+
+	img {
+		height: 300px;
+		}
+
+	
+	div {
+		border: solid black 2px;
+		width: 30%;
+		padding: 10px;
+		display: inline-block;
+		
+	}
+</style>
+	</head>
+
+	<body>
+<div>
+ <img src= <?php echo $torn['foto'];?>> 
+<p>
+	<b><?php echo $torn['nimi'];?></b> on ehitatud <?php echo $torn['ehitusaeg'];?>.
+	Tänapäevases linnapildis on ta leitav <?php echo $torn['asukoht'];?>. </br> Loe rohkem <a href=<?php echo $torn['viide'];?>>Wikipediast.</a> </p>
+</div>
+
+	</body
+	
+</html>
