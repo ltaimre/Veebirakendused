@@ -1,0 +1,106 @@
+ <?php
+ 
+	$tekst="Siia tuleb kasutajakommentaar";
+	if (isset($_POST['kommentaar']) && $_POST['kommentaar']!="") {
+ 	  $tekst=htmlspecialchars($_POST['kommentaar']);
+	} 
+	
+	$taustav="white";
+	if (isset($_POST['taust']) && $_POST['taust']!="") {
+ 	  $taustav=htmlspecialchars($_POST['taust']);
+	} 
+	
+	$tekstiv="black";
+	if (isset($_POST['tekst']) && $_POST['tekst']!="") {
+ 	  $tekstiv=htmlspecialchars($_POST['tekst']);
+	} 
+	
+	$nurgar=0;
+	if (isset($_POST['nurgad'])) {
+	Switch($_POST['nurgad']){
+		case'kandiline': $nurgar=0; break;
+		case'ymar': $nurgar=50; break;} }
+	?>
+	
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Kommentaarikast</title>
+	<style type="text/css">
+	
+	
+	.kommentaarikast {
+	height: 200px;
+	width: 400px;
+	background-color:  <?php echo $taustav; ?>;
+	border: solid black;
+	border-radius: <?php echo $nurgar; ?>px;
+	display: inline-block;
+	position: absolute;
+	margin: 30px;
+	}
+	
+	.kommentaaritekst {
+	padding: 10px;
+	}
+	
+	.abitekst {
+	font-weight: bold;
+	
+	}
+	
+	.sisestusväli {
+	display: inline-block;
+	padding 20px;
+	margin: 30px;
+
+	}
+	
+
+	
+	
+	
+
+	
+	
+	</style>
+</head>
+<body>
+
+	<div class=sisestusväli>
+		<form action="Andmeside.php" method="post" > 
+		<textarea name="kommentaar" cols="50" rows="10" 
+		placeholder="Siia kirjuta oma kommentaar"></textarea>
+		<br>
+		
+		 Määra tekstivärv:
+		<input type="color" name="tekst" value="black">
+		
+		Määra taustavärv:
+		<input type="color" name="taust" value="#FFFFFF">
+
+		<br>
+		Kandiline:
+		<input 
+		type="radio"
+		name="nurgad" value="kandiline"/>
+		Ümmargune:
+		<input type="radio"
+		name="nurgad" value="ymar" />
+		<br>
+		<input type="submit" value="Sisesta kommentaar">
+		</form>
+		
+	</div>
+	<div class=kommentaarikast>
+	
+	<p class=kommentaaritekst> <?php echo $tekst; ?>
+		</p>
+	
+	</div>
+		
+		
+	
+<body>
+</html>
