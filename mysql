@@ -1,0 +1,11 @@
+1.CREATE TABLE ltaimre_Loomaaed (id integer PRIMARY KEY auto_increment, nimi varchar(150), vanus integer, liik varchar(150), puur integer)
+
+2.INSERT INTO ltaimre_Loomaaed (nimi, vanus, liik, puur) VALUES ('Kana', 20, 'kanaline', 1), ('Kass', 30, 'kaslane', 2), ('Koer', 40, 'koerlane', 3), ('Kukk', 50, 'kuklane', 1), ('Kana2', 60, 'kanaline', 4);
+
+3.SELECT nimi, puur FROM ltaimre_Loomaaed WHERE puur=1
+
+4.SELECT MIN(vanus), MAX(vanus) FROM ltaimre_Loomaaed
+	
+5.SELECT puur, COUNT(*) FROM ltaimre_Loomaaed GROUP BY puur
+	
+6.UPDATE ltaimre_Loomaaed SET vanus=vanus+1
