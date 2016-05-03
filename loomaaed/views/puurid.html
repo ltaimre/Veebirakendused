@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8" />
+	
+	<style>
+	.puur {
+		border: solid black 2px;
+		width: 	20%;
+		display: inline-block;
+	}
+	
+</style>
+	</head>
+
+	<body>
+	<div>
+	
+	<?php foreach ($puurid as $key => $puur):?> 
+		<div class=puur>
+		<h1><?php echo "Puur nr ".$key.".";?>  </h1>
+			<?php foreach($puur as $sisu):?> 
+			 <img src= <?php echo $sisu['liik'];?>> 
+			<h6> <?php echo "Siin elab ".$sisu["nimi"].", kes on ".$sisu["vanus"]." aastat vana.";?></h6>
+	<?php endforeach; ?>
+		</div>
+	<?php endforeach; ?>
+		
+	</div>
+	
+
+	</body
+	
+</html>
