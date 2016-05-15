@@ -13,6 +13,27 @@ function connect_db(){
 
 function logi(){
 	// siia on vaja funktsionaalsust (13. nädalal)
+	global $connection;
+	if ($_SERVER['REQUEST_METHOD'] == "POST") {
+		if (isset($_POST['user']) && isset($_POST['pass'])) {
+			if ($_POST['user'] == "" || $_POST['pass'] == "") {
+					$errors[] = "Kasutajanimi või salasõna puudu";
+			} else 
+			{ $kasutajanimi = mysqli_real_escape_string($connection,htmlspecialchars($_POST['user']));
+		      $salasona = mysqli_real_escape_string($connection,htmlspecialchars($_POST['pass']));
+			$vaste = mysqli_query($connection, "SELECT id FROM ltaimre_kylastajad WHERE username = '".$kasutajanimi."' AND passw = SHA1('".$salasona."')") or die("Päringut ei 		toimunud");
+
+	if (mysqli_num_rows($vaste) >= 1) {
+		$id = mysqli_fetch_assoc($vaste)['id'];
+		$_SESSION['user'] = $id;
+		$_SESSION['username'] = $kasutajanimi;
+		header("Location: loomaaed.php?page=loomad");
+			} else {
+		$errors[] = "Kasutajanimi või parool on vale"; }
+	}
+		}			
+
+}
 
 	include_once('views/login.html');
 }
@@ -25,6 +46,13 @@ function logout(){
 
 function kuva_puurid(){
 	// siia on vaja funktsionaalsust
+	
+	if (!isset($_SESSION['user'])) {
+
+				header("Location: loomaaed.php?page=login");
+
+	}
+
 	$puurid = array();
 	$puuriquery= mysqli_query($GLOBALS['connection'], "SELECT DISTINCT puur FROM ltaimre_Loomaaed ORDER BY puur ASC");
 	while ($puuri_nr = mysqli_fetch_assoc($puuriquery)) {
@@ -42,14 +70,35 @@ function kuva_puurid(){
 function lisa(){
 	// siia on vaja funktsionaalsust (13. nädalal)
 	
+	global $connection;
+	if (!isset($_SESSION['user'])) {
+		header("Location: loomaaed.php?page=login");
+		}
+
+	if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+	$lugeja = 1;
+	if (!isset($_POST['nimi'])) {$errors[] = "Nimi tühi"; $lugeja = 0;}
+	if (!isset($_POST['puur'])) {$errors[] = "Puur tühi"; $lugeja = 0;}
+	$liik = upload("liik");
+	if ($liik == "") {$errors[] = "Liik tühi"; $lugeja = 0;}
+
+	if ($lugeja == 1) {
+	$stmt = $connection->prepare("INSERT INTO ltaimre_Loomaaed_loomaaed (nimi,puur,liik) VALUES (?,?,?)");
+	$nimi = mysqli_real_escape_string($connection,htmlspecialchars($_POST["nimi"]));
+	$puur = mysqli_real_escape_string($connection,htmlspecialchars($_POST["puur"]));
+	$liik = preg_replace("/(pildid\/)|(\.png)/", '', $liik);
+	$stmt->bind_param("sis", $nimi,$puur,$liik); //string-integer-string
+	$stmt->execute() or die ("Ei õnnestund"); }
+	}
 	include_once('views/loomavorm.html');
-	
 }
 
 function upload($name){
 	$allowedExts = array("jpg", "jpeg", "gif", "png");
 	$allowedTypes = array("image/gif", "image/jpeg", "image/png","image/pjpeg");
-	$extension = end(explode(".", $_FILES[$name]["name"]));
+	$parts = explode(".", $_FILES[$name]["name"]);
+	$extension = end($parts);
 
 	if ( in_array($_FILES[$name]["type"], $allowedTypes)
 		&& ($_FILES[$name]["size"] < 100000)
